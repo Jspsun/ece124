@@ -23,8 +23,6 @@ logic_func <= hex_A AND hex_B when "1110",
 				  hex_A OR hex_B when "1101",
 				  hex_A XOR hex_B when "1011",
 				  sum when "0111",
-				  null when others;
-				  --CASE when "1111"; -- leds are turned off
-				  --DO SOMETHING WHEN other; -- seven seg shouild show 8, all leds should turn on
+				  "0000" when others;
 
 end logic;
