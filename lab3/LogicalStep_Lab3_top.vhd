@@ -3,13 +3,13 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity LogicalStep_Lab3_top is port (
-   clkin_50		: in	std_logic;
-	pb				: in	std_logic_vector(3 downto 0); -- pb(2) fdoor; pb(1) window; pb(0) bdoor
- 	sw   			: in  std_logic_vector(7 downto 0); -- The switch inputs
-   leds			: out std_logic_vector(7 downto 0);	-- for displaying the switch content
-   seg7_data 	: out std_logic_vector(6 downto 0); -- 7-bit outputs to a 7-segment
-	seg7_char1  : out	std_logic;							-- seg7 digi selectors
-	seg7_char2  : out	std_logic							-- seg7 digi selectors
+	clkin_50	: in std_logic;
+	pb			: in std_logic_vector(3 downto 0);	-- pb(2) fdoor; pb(1) window; pb(0) bdoor
+ 	sw   		: in std_logic_vector(7 downto 0); 	-- The switch inputs
+	leds		: out std_logic_vector(7 downto 0);	-- for displaying the switch content
+	seg7_data 	: out std_logic_vector(6 downto 0); -- 7-bit outputs to a 7-segment
+	seg7_char1  : out std_logic;					-- seg7 digi selectors
+	seg7_char2  : out std_logic						-- seg7 digi selectors
 	
 ); 
 end LogicalStep_Lab3_top;
@@ -19,7 +19,7 @@ architecture Energy_Monitor of LogicalStep_Lab3_top is
 ------------------------------------------------------------------- 
   component compx4 port (
 	a0, b0, a1, b1, a2, b2, a3, b3	: in std_logic; --a is the current temp, b is the desired temp
-	a_more_b, a_equal_b, a_less_b		: out std_logic --one-bit output based on 4 compx1
+	a_more_b, a_equal_b, a_less_b	: out std_logic --one-bit output based on 4 compx1
 );
    end component;
 	
