@@ -72,7 +72,7 @@ INST0: compx4 port map(sw(0), desired(0), sw(1), desired(1), sw(2), desired(2), 
 
 INST1: SevenSegment port map(sw(3 downto 0), seg7_A);
 INST2: SevenSegment port map(desired, seg7_B);
-INST3: segment7_mux port map(clkin_50, seg7_A, seg7_B, seg7_data, seg7_char1, seg7_char2);
+INST3: segment7_mux port map(clkin_50, seg7_A, seg7_B, seg7_data, seg7_char2, seg7_char1);
 INST4: vacation_mux port map(sw(7 downto 4), pb(3), desired);
 
 end Energy_Monitor;
