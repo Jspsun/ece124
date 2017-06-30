@@ -4,29 +4,27 @@ USE ieee.numeric_std.ALL;
 
 ENTITY LogicalStep_Lab4_top IS
   PORT(
-    clkin_50		: in	std_logic;
+   clkin_50		: in	std_logic;
   	rst_n		  	: in	std_logic;
   	pb			  	: in	std_logic_vector(3 downto 0);
-   	sw   		   	: in  std_logic_vector(7 downto 0); -- The switch inputs
-    leds			  : out std_logic_vector(7 downto 0);	-- for displaying the switch content
-    seg7_data 	: out std_logic_vector(6 downto 0); -- 7-bit outputs to a 7-segment
-  	seg7_char1  : out	std_logic;						       	-- seg7 digi selectors
-  	seg7_char2  : out	std_logic						        	-- seg7 digi selectors
+   sw   		   : in  std_logic_vector(7 downto 0); -- The switch inputs
+   leds			: out std_logic_vector(7 downto 0);	-- for displaying the switch content
+   seg7_data 	: out std_logic_vector(6 downto 0); -- 7-bit outputs to a 7-segment
+  	seg7_char1  : out	std_logic;				       	-- seg7 digi selectors
+  	seg7_char2  : out	std_logic				        	-- seg7 digi selectors
 	);
 END LogicalStep_Lab4_top;
 
 ARCHITECTURE SimpleCircuit OF LogicalStep_Lab4_top IS
   component compx4 port (
   	a0, b0, a1, b1, a2, b2, a3, b3	: in std_logic;
-  	a_more_b, a_equal_b, a_less_b		: out std_logic
+  	a_less_b, a_equal_b, a_more_b		: out std_logic
 	);
   end component;
 
   component Moore_SM port (
-  (
    clk_input, rst_n				     : IN std_logic;
    MORE, EQUAL, LESS			     : IN std_logic;
-   target_value					       : IN std_logic_vector(3 downto 0);
    current_value		           : OUT std_logic_vector(3 downto 0)
    );
 	end component;
@@ -48,25 +46,24 @@ ARCHITECTURE SimpleCircuit OF LogicalStep_Lab4_top IS
  	end component;
 
 ----------------------------------------------------------------------------------------------------
-  CONSTANT	SIM						    	: boolean := FALSE; 	-- set to TRUE for simulation runs otherwise keep at 0.
-  CONSTANT  CLK_DIV_SIZE	     	: INTEGER := 24;  -- size of vectors for the counters
+	CONSTANT	SIM					    	: boolean := FALSE; 	-- set to TRUE for simulation runs otherwise keep at 0.
+	CONSTANT  CLK_DIV_SIZE	    	 	: INTEGER := 24;  -- size of vectors for the counters
 
-  signal 	Main_CLK				  		: STD_LOGIC; 			-- main clock to drive sequencing of State Machine
+	signal 	Main_CLK				  		: STD_LOGIC; 			-- main clock to drive sequencing of State Machine
 
 	signal 	bin_counter				  	: UNSIGNED(CLK_DIV_SIZE-1 downto 0); -- := to_unsigned(0,CLK_DIV_SIZE); -- reset binary counter to zero
 
 	signal	Simple_States 				: std_logic_vector(7 downto 4);
-	signal	Left0_Right1			   	: std_logic;
+	signal	Left0_Right1		   	: std_logic;
 
-	signal more							    	: std_logic; -- for 4-bit comparator
-	signal less							     	: std_logic; -- for 4-bit comparator
-	signal equal					    		: std_logic; -- for 4-bit comparator
+	signal more							  	: std_logic; -- for 4-bit comparator
+	signal less							  	: std_logic; -- for 4-bit comparator
+	signal equal					   	: std_logic; -- for 4-bit comparator
 
-	signal current_value         	: std_logic_vector(3 downto 0);
+	signal current_value       	  	: std_logic_vector(3 downto 0);
 	signal target_value				  	: std_logic_vector(3 downto 0);
-	signal temp_leds					  	: std_logic_vector(2 downto 0);
 
-  signal seg7_A			            : std_logic_vector(6 downto 0); -- left display
+	signal seg7_A			            : std_logic_vector(6 downto 0); -- left display
 	signal seg7_B			            : std_logic_vector(6 downto 0); -- right display
 
 ----------------------------------------------------------------------------------------------------
@@ -92,18 +89,19 @@ target_value <= sw(3 downto 0);     -- target value based on switches
 
 leds(7 downto 4) <= Simple_States;  -- incrementing/decrementing counter
 leds(3) <= Main_Clk;                -- flashing LED at speed of Main_Clk
-leds(2) <= less;
-leds(2) <= equal;
 leds(2) <= more;
+leds(1) <= equal;
+leds(0) <= less;
+
+
 
 INST0: compx4 port map(sw(0), current_value(0), sw(1), current_value(1),
                        sw(2), current_value(2), sw(3), current_value(3),
                        more, equal, less);
-INST1: Moore_SM port map(Main_Clk, rst_n, more, equal, less,
-                         target_value, current_value);
+INST1: Moore_SM port map(Main_Clk, rst_n, more, equal, less, current_value);
 INST2: SevenSegment port map(target_value, seg7_A);
 INST3: SevenSegment port map(current_value, seg7_B);
-INST4: segment7_mux port map(clk_input, seg7_A, seg7_B, seg7_data, seg7_char2, seg7_char1);
+INST4: segment7_mux port map(clkin_50, seg7_A, seg7_B, seg7_data, seg7_char2, seg7_char1);
 
 ----------------------------------------------------
 process (Main_Clk, rst_n) is

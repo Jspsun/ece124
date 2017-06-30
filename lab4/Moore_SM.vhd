@@ -6,8 +6,7 @@ Entity Moore_SM IS Port
 (
  clk_input, rst_n				     : IN std_logic;
  MORE, EQUAL, LESS			     : IN std_logic;
- target_value					       : IN std_logic_vector(3 downto 0);
- current_value		           : OUT std_logic_vector(3 downto 0)
+ current_value		              : OUT std_logic_vector(3 downto 0)
  );
 END ENTITY;
 
@@ -17,7 +16,6 @@ Architecture MSM of Moore_SM is
 
 
   signal current_state,next_state	:  STATE_NAMES;   -- signals of type STATE_NAMES
-	signal current_value	            : std_logic_vector(3 downto 0);
 
 BEGIN
 --------------------------------------------------------------------------------
@@ -27,11 +25,11 @@ BEGIN
 -- REGISTER LOGIC PROCESS
 -- add clock and any related inputs for state machine register section into Sensitivity List
 
-Register_Section: PROCESS (Main_Clk, rst_n,next_state)  -- this process synchronizes the activity to a clock
+Register_Section: PROCESS (clk_input, rst_n,next_state)  -- this process synchronizes the activity to a clock
 BEGIN
 	IF (rst_n = '0') THEN
 		current_state <= S0;
-	ELSIF(rising_edge(Main_Clk)) THEN
+	ELSIF(rising_edge(clk_input)) THEN
 		current_state <=next_state;
 	        ELSE
 		current_state <= current_state;
