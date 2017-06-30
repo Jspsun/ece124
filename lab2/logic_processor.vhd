@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity logic_processor is
 port(
 	hex_A, hex_B			: in std_logic_vector(3 downto 0);
-	pb							: in std_logic_vector(3 downto 0);
+	pb							  : in std_logic_vector(3 downto 0);
 	logic_func				: out std_logic_vector(3 downto 0)
 	);
 end entity logic_processor;
