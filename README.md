@@ -6,7 +6,7 @@ We made program to do basic boolean algebra operations.
 ## Lab 2
 We made something using muxes. 
 
-## lab 3
+## Lab 3
 We made a vacation home monitoring system using a comparator.
 
 ## Lab 4
