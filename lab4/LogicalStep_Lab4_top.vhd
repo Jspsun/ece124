@@ -23,7 +23,7 @@ ARCHITECTURE SimpleCircuit OF LogicalStep_Lab4_top IS
   end component;
 
   component Moore_SM port (
-   clk_input, rst_n				     : IN std_logic;
+   clk_input, rst_n				  : IN std_logic;
    MORE, EQUAL, LESS			     : IN std_logic;
    current_value		           : OUT std_logic_vector(3 downto 0)
    );
@@ -81,7 +81,7 @@ BinCLK: PROCESS(clkin_50, rst_n) is
 Clock_Source:
 				Main_Clk <=
 				clkin_50 when sim = TRUE else			      	-- for simulations only
-				std_logic(bin_counter(23));								-- for real FPGA operation
+				std_logic(bin_counter(23));						-- for real FPGA operation
 
 ---------------------------------------------------------------------------------------------------
 Left0_Right1 <= pb(0);              -- switch direction of led(7..4)
@@ -89,19 +89,20 @@ target_value <= sw(3 downto 0);     -- target value based on switches
 
 leds(7 downto 4) <= Simple_States;  -- incrementing/decrementing counter
 leds(3) <= Main_Clk;                -- flashing LED at speed of Main_Clk
-leds(2) <= more;
-leds(1) <= equal;
-leds(0) <= less;
+leds(2) <= more;							-- count up led
+leds(1) <= equal;							-- count done led
+leds(0) <= less;							-- count down led
+
 
 
 
 INST0: compx4 port map(sw(0), current_value(0), sw(1), current_value(1),
                        sw(2), current_value(2), sw(3), current_value(3),
-                       more, equal, less);
-INST1: Moore_SM port map(Main_Clk, rst_n, more, equal, less, current_value);
+                       more, equal, less); --passes in target value and current value to comparator
+INST1: Moore_SM port map(Main_Clk, rst_n, more, equal, less, current_value); -- uses slowed down clock
 INST2: SevenSegment port map(target_value, seg7_A);
 INST3: SevenSegment port map(current_value, seg7_B);
-INST4: segment7_mux port map(clkin_50, seg7_A, seg7_B, seg7_data, seg7_char2, seg7_char1);
+INST4: segment7_mux port map(clkin_50, seg7_A, seg7_B, seg7_data, seg7_char2, seg7_char1); -- uses fast clock
 
 ----------------------------------------------------
 process (Main_Clk, rst_n) is
