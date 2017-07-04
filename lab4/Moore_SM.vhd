@@ -42,7 +42,7 @@ END PROCESS;
 
 Transition_Section: PROCESS (MORE, LESS, EQUAL, current_state)
 
-BEGIN
+BEGIN -- based on comparator output, assign state to next_state
 	  CASE current_state IS
       WHEN S0 =>
         IF (MORE ='1') THEN
@@ -192,7 +192,7 @@ END PROCESS;
 
 Decoder_Section: PROCESS(current_state)
 
-BEGIN
+BEGIN -- based on current state, assign 4-bit value to current-value
   CASE current_state IS
     WHEN S0 =>
       current_value <= "0000";
