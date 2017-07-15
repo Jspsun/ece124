@@ -1,0 +1,112 @@
+-- part B MSM
+--	  WHEN S0 =>
+--			next_state <= S1;
+--      WHEN S1 =>
+--			next_state <= S2;
+--      WHEN S2 =>
+--			next_state <= S3;
+--      WHEN S3 =>
+--			next_state <= S4;
+--      WHEN S4 =>
+--			next_state <= S5;
+--      WHEN S5 =>
+--         next_state <= S6;
+--      WHEN S6 =>
+--         next_state <= S7;
+--      WHEN S7 =>
+--         next_state <= S8;
+--      WHEN S8 =>
+--			next_state <= S9;
+--      WHEN S9 =>
+--			next_state <= S10;
+--      WHEN S10 =>
+--			next_state <= S11;
+--      WHEN S11 =>
+--			next_state <= S12;
+--      WHEN S12 =>
+--			next_state <= S13;
+--      WHEN S13 =>
+--         next_state <= S14;
+--      WHEN S14 =>
+--         next_state <= S15;
+--      WHEN S15 =>
+--         next_state <= S0;
+--      WHEN others =>
+--          next_state <= S0;
+--		END CASE;
+		  -- MSM for part C
+--      WHEN S0 =>
+--         if (ew_latch = '1') THEN
+--				next_state <= S6;
+--			else
+--				next_state <= S1;
+--			end if; 
+--      WHEN S1 =>
+--         if (ew_latch = '1') THEN
+--				next_state <= S6;
+--			else
+--				next_state <= S2;
+--			end if; 
+--      WHEN S2 =>
+--         if (ew_latch = '1') THEN
+--				next_state <= S6;
+--			else
+--				next_state <= S3;
+--			end if; 
+--      WHEN S3 =>
+--         if (ew_latch = '1') THEN
+--				next_state <= S6;
+--			else
+--				next_state <= S4;
+--			end if; 
+--      WHEN S4 =>
+--         if (ew_latch = '1') THEN
+--				next_state <= S6;
+--			else
+--				next_state <= S5;
+--			end if; 
+--      WHEN S5 =>
+--         next_state <= S6;
+--      WHEN S6 =>
+--         next_state <= S7;
+--      WHEN S7 =>
+--         next_state <= S8;
+--      WHEN S8 =>
+--			if (ns_latch = '1') THEN
+--				next_state <= S14;
+--			else
+--				next_state <= S9;
+--			end if; 
+--      WHEN S9 =>
+--         if (ns_latch = '1') THEN
+--				next_state <= S14;
+--			else
+--				next_state <= S10;
+--			end if; 
+--      WHEN S10 =>
+--         if (ns_latch = '1') THEN
+--				next_state <= S14;
+--			else
+--				next_state <= S11;
+--			end if; 
+--      WHEN S11 =>
+--         if (ns_latch = '1') THEN
+--				next_state <= S14;
+--			else
+--				next_state <= S12;
+--			end if; 
+--      WHEN S12 =>
+--         if (ns_latch = '1') THEN
+--				next_state <= S14;
+--			else
+--				next_state <= S13;
+--			end if; 
+--      WHEN S13 =>
+--         next_state <= S14;
+--      WHEN S14 =>
+--         next_state <= S15;
+--      WHEN S15 =>
+--         next_state <= S0;
+--      WHEN others =>
+--          next_state <= S0;
+--		END CASE;
